@@ -30,23 +30,20 @@ router.get('/:id', (req, res) => {
 // get all recent DB posts todo:
 
 router.post('/push', (req, res) => {
-  console.log(req.body);
-  res.send(req.body);
-
-  /* // TODO: implement below when DB is connected
+  console.log("...trying to post data... ");
   const post = new Price({
       hospital: req.body.hospital,
-      procedureDescription: req.body.procedureDescription.
+      procedureDescription: req.body.procedureDescription,
       procedureCost: req.body.procedureCost
   });
   post.save() // to DB
   .then(data => {
     res.json(data); // respond back w/ original request if DB post worked
-  });
+  })
   .catch(err => {
     res.json(err);
   });
-  */
+
 })
 
 module.exports = router;
