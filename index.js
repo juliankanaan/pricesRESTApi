@@ -23,11 +23,12 @@ app.get('/', (req, res) => {
 
 //  DB connect
 mongoose.connect(
-  process.env.DB_CONNECTION,
-  { useNewUrlParser: true },
+  process.env.DB_CONNECTION, {
+    useNewUrlParser: true
+  },
   () => {
-  console.log("connected to db...");
-}); 
+    console.log("connected to db...");
+  });
 
 app.listen(4000, (req, res) => {
   console.log("..server running");
