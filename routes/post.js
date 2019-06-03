@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const Price = require('../models/Price');
 
-// index - shows all DB posts 
+// index - shows all DB posts
 router.get('/', (req, res) => {
   // POST [cost, procedure, hospital to here]
   Price.find().then(data => {
@@ -36,6 +36,7 @@ router.post('/push', (req, res) => {
   post.save() // to DB
     .then(data => {
       res.json(data); // respond back w/ original request if DB post worked
+      //console.log("success");
     })
     .catch(err => {
       res.json(err);
