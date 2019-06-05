@@ -14,7 +14,32 @@ router.get('/', (req, res) => {
     })
 
 });
+// get data via filters
+router.get('records/:maxPrice.:minPrice.:limit', (req, res) => { // ../records/1200.500.10
+  // projection
 
+  Price.find()
+    .where('procedureCost').gt(req.params.minPrice).lt(req.params.maxPrice)
+    .limit(req.params.limit)
+    .then(matches => {
+      res.json(matches)
+    })
+    .catch(err => {
+      res.json(err)
+    });
+});
+// get via procedureDescription
+router.get('records/:procedureDescription.:limit', (req, res) => { // records/concussion.20
+  Price.find()
+    .where('procedureDescription').equals(req.body.procedureDescription)
+    .limit(limit)
+    .then(thisPost => {
+      res.json(thisPost);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+})
 // get by ID from DB
 router.get('/:id', (req, res) => {
   Price.findById(req.params.postId)
@@ -42,6 +67,6 @@ router.post('/push', (req, res) => {
       res.json(err);
     });
 
-})
+});
 
 module.exports = router;
