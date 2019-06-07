@@ -10,7 +10,11 @@ const postRoute = require('./routes/post');
 app.use(bodyParser.json()); // posts should be interpreted as JSON
 app.use('/api', postRoute);
 
-
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 // routes
 app.get('/', (req, res) => {
   //console.log("...user requesting home");
