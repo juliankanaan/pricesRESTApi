@@ -13,6 +13,7 @@ app.use('/api', postRoute);
 
 // routes
 app.get('/', (req, res) => {
+  //console.log("...user requesting home");
   res.send("home page");
 });
 
