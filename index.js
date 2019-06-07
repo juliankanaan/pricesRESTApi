@@ -3,18 +3,16 @@ const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 require('dotenv/config'); // hide DB connection details
+import cors from 'cors';
 // imported routes
 const postRoute = require('./routes/post');
 
 // middleware -- modules that run when routes are hit
+app.use(cors()); // should fix x-origin request blocking 
 app.use(bodyParser.json()); // posts should be interpreted as JSON
 app.use('/api', postRoute);
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+
 // routes
 app.get('/', (req, res) => {
   //console.log("...user requesting home");
