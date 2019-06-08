@@ -30,8 +30,13 @@ router.get('records/:maxPrice.:minPrice.:limit', (req, res) => { // ../records/1
 });
 // get via procedureDescription
 router.get('records/:procedureDescription.:limit', (req, res) => { // records/concussion.20
-  Price.find()
-    .where('procedureDescription').equals(req.body.procedureDescription)
+  if (!req.body.limit) {
+    limit = 20; // default to 20 results if not specified,
+  }
+
+  Price.find(
+      {procedureName: req.body.procedureDescription}
+    )
     .limit(limit)
     .then(thisPost => {
       res.json(thisPost);
