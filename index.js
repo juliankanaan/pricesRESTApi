@@ -8,8 +8,8 @@ const cors = require('cors');
 const postRoute = require('./routes/post');
 
 // middleware -- modules that run when routes are hit
-app.use(cors()); // should fix x-origin request blocking
-app.use(bodyParser.json()); // posts should be interpreted as JSON
+//app.use(cors()); // should fix x-origin request blocking
+app.use(bodyParser.json({limit: '50mb'})); // posts should be interpreted as JSON
 app.use('/api', postRoute);
 
 

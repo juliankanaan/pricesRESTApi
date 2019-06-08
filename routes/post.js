@@ -6,8 +6,8 @@ const Price = require('../models/Price');
 // index - shows all DB posts
 router.get('/', (req, res) => {
   // POST [cost, procedure, hospital to here]
-  Price.find().then(data => {
-      res.json(data)
+  Price.estimatedDocumentCount({}).then(data => {
+      res.json(data + " records")
     })
     .catch(err => {
       res.json(err)
@@ -29,13 +29,36 @@ router.get('records/:maxPrice.:minPrice.:limit', (req, res) => { // ../records/1
     });
 });
 // get via procedureDescription
-router.get('records/:procedureDescription.:limit', (req, res) => { // records/concussion.20
+router.get('/records/description', (req, res) => { // records/concussion.20
+  const queryDesc = req.query.procedureDescription
+  console.log(req.query)
   if (!req.body.limit) {
     limit = 20; // default to 20 results if not specified,
   }
 
   Price.find(
-      {procedureName: req.body.procedureDescription}
+      // use regex to find strings that contain all of our request, case not sensitive
+      // https://docs.mongodb.com/manual/reference/operator/query/regex/
+      {procedureDescription: { "$regex": queryDesc, "$options": "i" }}
+    )
+    .limit(limit)
+    .then(thisPost => {
+      res.json(thisPost);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+})
+// get via hospital
+router.get('/records/hospital', (req, res) => { // records/concussion.20
+  const queryHospital = req.query.hospital
+  console.log(req.query)
+  const limit = parseInt(req.query.limit)
+
+  Price.find(
+      // use regex to find strings that contain all of our request, case not sensitive
+      // https://docs.mongodb.com/manual/reference/operator/query/regex/
+      {hospital: { "$regex": queryHospital, "$options": "i" }}
     )
     .limit(limit)
     .then(thisPost => {
@@ -55,8 +78,31 @@ router.get('/:id', (req, res) => {
       res.json(err);
     });
 });
+// clear records from collection
+
+router.post('/records/delete', (req, res) => {
+  Price.deleteMany({}) // {hospital: "xyz"}
+    .then(err => {
+      console.log(err);
+    })
+})
+// clear records from collection by hopsital
+
+router.post('/records/delete/byHospital', (req, res) => {
+  const hospital = req.body.hospital
+  console.log(hospital);
+  res.send(req.body)
+
+
+  Price.deleteMany({hospital: hospital}) // {hospital: "xyz"}
+    .then(err => {
+      console.log(err);
+    })
+})
+
 // bulk post
 router.post('/push/bulk', (req, res) => {
+
   // convert incoming array into array of Price objects
   var prices = req.body.map(datum => {
     return new Price({
@@ -70,7 +116,7 @@ router.post('/push/bulk', (req, res) => {
   Price.insertMany(prices)
     .then(docs => {
       console.log(docs);
-      res.send(docs);
+      //res.send("server says: sent")
     })
     .catch(err => {
       res.send(err)
