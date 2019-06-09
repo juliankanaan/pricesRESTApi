@@ -11,7 +11,9 @@ const auth = require('./routes/authenticate');
 
 // middleware
 //app.use(cors()); // should fix x-origin request blocking
-app.use(bodyParser.json({limit: '50mb'})); // posts should be interpreted as JSON
+app.use(bodyParser.json({
+  limit: '50mb'
+})); // posts should be interpreted as JSON
 app.use('/api', postRoute);
 app.use('/api', lookupRoute);
 app.use('/api/user', auth);
@@ -21,7 +23,6 @@ app.get('/', (req, res) => {
   //console.log("...user requesting home");
   res.send("home page");
 });
-
 
 //  DB connect
 mongoose.connect(
