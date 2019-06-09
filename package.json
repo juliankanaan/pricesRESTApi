@@ -18,7 +18,8 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "isomorphic-fetch": "^2.2.1",
-    "mongoose": "^5.5.12"
+    "mongoose": "^5.5.12",
+    "tern-node-express": "^0.4.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"

@@ -6,12 +6,13 @@ require('dotenv/config'); // hide DB connection details
 const cors = require('cors');
 // imported routes
 const postRoute = require('./routes/post');
+const lookupRoute = require('./routes/lookup');
 
-// middleware -- modules that run when routes are hit
+// middleware 
 //app.use(cors()); // should fix x-origin request blocking
 app.use(bodyParser.json({limit: '50mb'})); // posts should be interpreted as JSON
 app.use('/api', postRoute);
-
+app.use('/api', lookupRoute)
 
 // routes
 app.get('/', (req, res) => {
