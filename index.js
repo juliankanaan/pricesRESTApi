@@ -7,12 +7,14 @@ const cors = require('cors');
 // imported routes
 const postRoute = require('./routes/post');
 const lookupRoute = require('./routes/lookup');
+const auth = require('./routes/authenticate');
 
-// middleware 
+// middleware
 //app.use(cors()); // should fix x-origin request blocking
 app.use(bodyParser.json({limit: '50mb'})); // posts should be interpreted as JSON
 app.use('/api', postRoute);
-app.use('/api', lookupRoute)
+app.use('/api', lookupRoute);
+app.use('/api/user', auth);
 
 // routes
 app.get('/', (req, res) => {
