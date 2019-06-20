@@ -10,7 +10,8 @@ const lookupRoute = require('./routes/lookup');
 const auth = require('./routes/authenticate');
 
 // middleware
-//app.use(cors()); // should fix x-origin request blocking
+app.use(cors()); // should fix x-origin request blocking
+// max file size fix because bodyParser is a lazy POS 
 app.use(bodyParser.json({
   limit: '50mb'
 })); // posts should be interpreted as JSON
@@ -34,5 +35,5 @@ mongoose.connect(
   });
 
 app.listen(process.env.PORT, (req, res) => {
-  console.log("..server running");
+  console.log(`..server running on ${process.env.PORT}`);
 });
