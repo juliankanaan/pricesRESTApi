@@ -22,7 +22,7 @@ app.use('/api/user', auth);
 // routes
 app.get('/', (req, res) => {
   //console.log("...user requesting home");
-  res.send("home page");
+  res.redirect('https://documenter.getpostman.com/view/7579629/S1a7UjaQ')
 });
 
 //  DB connect
