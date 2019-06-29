@@ -10,8 +10,11 @@ const lookupRoute = require('./routes/lookup');
 const auth = require('./routes/authenticate');
 
 // middleware
-//app.use(cors()); // should fix x-origin request blocking
-app.use(bodyParser.json({limit: '50mb'})); // posts should be interpreted as JSON
+app.use(cors()); // should fix x-origin request blocking
+// max file size fix because bodyParser is a lazy POS 
+app.use(bodyParser.json({
+  limit: '50mb'
+})); // posts should be interpreted as JSON
 app.use('/api', postRoute);
 app.use('/api', lookupRoute);
 app.use('/api/user', auth);
@@ -19,9 +22,8 @@ app.use('/api/user', auth);
 // routes
 app.get('/', (req, res) => {
   //console.log("...user requesting home");
-  res.send("home page");
+  res.redirect('https://documenter.getpostman.com/view/7579629/S1a7UjaQ')
 });
-
 
 //  DB connect
 mongoose.connect(
@@ -33,5 +35,5 @@ mongoose.connect(
   });
 
 app.listen(process.env.PORT, (req, res) => {
-  console.log("..server running");
+  console.log(`..server running on ${process.env.PORT}`);
 });
