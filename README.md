@@ -1,4 +1,6 @@
-Server that supplies endpoints and handlers to submit / retrive hospital data to my MongoDB gigantic price DB
+Server that supplies endpoints and handlers to submit / retrive hospital data to my MongoDB gigantic price DB.
+
+https://reductible.herokuapp.com
 
 
 
